@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock title %}
+
+{% block body %}
+<div class="container">
+    <div class="alert alert-info mt-3 text-center fs-3" role="alert">
+        Employee Management System
+    </div>
+    <div class="row  mt-3">
+        <div class="col-4">
+            <div class="alert alert-info text-center fs-4" role="alert">
+                Create/Update Dept
+            </div>
+
+            <form method='POST' action="{% url 'post_dept' %}" novalidate>
+                {% csrf_token %}
+
+                <input type="text" name="dept_id" value="" hidden>
+
+                <div class="col-md-12">
+                    <label class="form-control-label">Select Employee ID :</label>
+                </div>
+
+                <div class="col-md-12">
+                    <select class="form-select mt-3" name="emp_id" required>
+                        {% for i in emp %}
+                        <option value="{{i.eid}}">{{i.eid}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="col-md-12">
+                    <input class="form-control mt-3" type="text" name="dept_name" placeholder="Dept Name" required>
+                </div>
+                <div class="form-button mt-3">
+                    <input id="submit" type="submit" class="btn btn-primary">
+                </div>
+            </form>
+        </div>
+        <div class="col">
+            <div class="alert alert-warning text-center fs-4" role="alert">
+                Employee list
+            </div>
+            <table class="table table-scrollable">
+                <thead>
+                    <tr>
+                        <th scope="col" class="text-center">ID</th>
+                        <th scope="col" class="text-center">Emp Name</th>
+                        <th scope="col" class="text-center">Emp City</th>
+                        <th scope="col" class="text-center">Emp type</th>
+                        <th scope="col" class="text-center">Emp Domain</th>
+                        <th scope="col" class="text-center">Emp Dept</th>
+                        <th scope="col" class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+                    {% for d in data %}
+                    <tr class="align-middle">
+                        <td scope="row">{{forloop.counter}}</td>
+                        <td class="text-center">{{d.eid.ename}}</td>
+                        <td class="text-center">{{d.eid.ecity}}</td>
+                        <td class="text-center">{{d.eid.etype}}</td>
+                        <td class="text-center">{{d.eid.edomain}}</td>
+                        <td class="text-center">{{d.deptname}}</td>
+                        <td class="col-sm-3 text-center">
+                            <a class="btn btn-warning me-2 edit_btn" href="">
+                                View
+                            </a>
+                            <a class="btn btn-danger del_btn" href="">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}
